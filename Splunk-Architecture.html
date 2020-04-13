@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://docs.splunk.com/images/e/e2/Basic_cluster_60.png">
 <meta property="og:image" content="http://willhktube.github.io/images/splunk_common_ports.png">
 <meta property="article:published_time" content="2020-04-13T12:11:51.000Z">
-<meta property="article:modified_time" content="2020-04-13T13:33:54.398Z">
+<meta property="article:modified_time" content="2020-04-13T15:07:08.454Z">
 <meta property="article:author" content="Will Luo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://willhktube.github.io/source/images/splunk_software_packages.png">
@@ -123,12 +123,72 @@
 <li>Indexer Cluster<br><img src="https://docs.splunk.com/images/e/e2/Basic_cluster_60.png" alt="Indexer Cluster"></li>
 </ul>
 <h2 id="Splunk-Distributed-Search-Overall-Architecture"><a href="#Splunk-Distributed-Search-Overall-Architecture" class="headerlink" title="Splunk Distributed Search Overall Architecture"></a>Splunk Distributed Search Overall Architecture</h2><p><img src="../images/splunk_common_ports.png" alt=""></p>
-<p>##官方性能建议<br>|                          | &lt; 2GB/day           | 2 to 300 GB/day     | 300 to 600 GB/day | 600GB to 1TB/day | 1 to 2TB/day    | 2 to 3TB/day    |<br>|————————–|———————|———————|——————-|——————|—————–|—————–|<br>| Total Users: less than 4 | 1 combined instance | 1 combined instance | 1 Search Head, 2 Indexers   | 1 Search Head, 3 Indexers     | 1 Search Head,7 Indexers     | 1 Search Head, 10 Indexers    |<br>| Total Users: up to 8     | 1 combined instance | 1 Search Head,  1 Indexers     | 1 Search Head, 2 Indexers    | 1 Search Head, 3 Indexers  | 1 Search Head,8 Indexers    | 1 Search Head, 12 Indexers   |<br>| Total Users: up to 16    | 1 Search Head,  1 Indexers    | 1 Search Head,  1 Indexers     | 1 Search Head,  3 Indexers   | 2 Search Heads,4 Indexers   | 2 Search Heads,10 Indexers | 2 Search Heads, 15 Indexers |<br>| Total Users: up to 24    | 1 Search Head,  1 Indexers    | 1 Search Head,  2 Indexers    | 2 Search Heads, 3 Indexers     | 2 Search Heads, 6 Indexers  | 2 Search Heads, 12 Indexers | 3 Search Heads, 18 Indexers|<br>| Total Users: up to 48    | 1 Search Head,  2 Indexers    | 1 Search Head,  2 Indexers     | 2 Search Heads, 4 Indexers   | 2 Search Heads,7 Indexers | 3 Search Heads, 14 Indexers | 3 Search Heads,21 Indexers |</p>
+<h2 id="官方性能建议"><a href="#官方性能建议" class="headerlink" title="官方性能建议"></a>官方性能建议</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>&lt; 2GB/day</th>
+<th>2 to 300 GB/day</th>
+<th>300 to 600 GB/day</th>
+<th>600GB to 1TB/day</th>
+<th>1 to 2TB/day</th>
+<th>2 to 3TB/day</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Total Users: less than 4</td>
+<td>1 combined instance</td>
+<td>1 combined instance</td>
+<td>1 Search Head, 2 Indexers</td>
+<td>1 Search Head, 3 Indexers</td>
+<td>1 Search Head,7 Indexers</td>
+<td>1 Search Head, 10 Indexers</td>
+</tr>
+<tr>
+<td>Total Users: up to 8</td>
+<td>1 combined instance</td>
+<td>1 Search Head,  1 Indexers</td>
+<td>1 Search Head, 2 Indexers</td>
+<td>1 Search Head, 3 Indexers</td>
+<td>1 Search Head,8 Indexers</td>
+<td>1 Search Head, 12 Indexers</td>
+</tr>
+<tr>
+<td>Total Users: up to 16</td>
+<td>1 Search Head,  1 Indexers</td>
+<td>1 Search Head,  1 Indexers</td>
+<td>1 Search Head,  3 Indexers</td>
+<td>2 Search Heads,4 Indexers</td>
+<td>2 Search Heads,10 Indexers</td>
+<td>2 Search Heads, 15 Indexers</td>
+</tr>
+<tr>
+<td>Total Users: up to 24</td>
+<td>1 Search Head,  1 Indexers</td>
+<td>1 Search Head,  2 Indexers</td>
+<td>2 Search Heads, 3 Indexers</td>
+<td>2 Search Heads, 6 Indexers</td>
+<td>2 Search Heads, 12 Indexers</td>
+<td>3 Search Heads, 18 Indexers</td>
+</tr>
+<tr>
+<td>Total Users: up to 48</td>
+<td>1 Search Head,  2 Indexers</td>
+<td>1 Search Head,  2 Indexers</td>
+<td>2 Search Heads, 4 Indexers</td>
+<td>2 Search Heads,7 Indexers</td>
+<td>3 Search Heads, 14 Indexers</td>
+<td>3 Search Heads,21 Indexers</td>
+</tr>
+</tbody></table>
+<hr>
+<p>具体的分享会在YouTube频道中更新，有任何问题欢迎在YouTube回复中提问<br>YouTube 链接是<a href="https://youtu.be/Qw5T_VbfNnE" target="_blank" rel="noopener">https://youtu.be/Qw5T_VbfNnE</a><br>如果不方便上YouTube ，可以邮件给我<a href="mailto:willhktube@gmail.com">willhktube@gmail.com</a> </p>
+<p>Cheers.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://willhktube.github.io/Splunk-Architecture.html" data-id="ck8yhed1n0000209jalyiapv1" class="article-share-link">Share</a>
+      <a data-url="http://willhktube.github.io/Splunk-Architecture.html" data-id="ck8ym3ffz0002qo9j4mddaowb" class="article-share-link">Share</a>
       
       
     </footer>
