@@ -5,19 +5,21 @@
   
 
   
-  <title>Will&#39;s First Blog | Will&#39;s Ideas</title>
+  <title>Install Splunk on linux and collecting data | Will&#39;s Ideas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="想了想还是决定用中文吧 先做个简单的自我介绍，大家可以叫我Will，坐标香港。某天发现youtube上找不到一些感兴趣的内容的中文介绍，就想着可以尝试做这个方向的视频，顺便是可以记录一下自己的学习历程。 Cheers.">
+  <meta name="description" content="今天主要是想分享一下怎么在linux服务器上部署standalone Splunk并且展示在linux和windows平台上收集日志的过程。同时会讲一下安装的时候我曾经碰见过的问题 以下是主要展示的内容  在linux系统上安装splunk Splunk监控linux本机上的日志内容 在Windows上安装UF并把日志转发到Splunk服务器上   Splunk文档链接: 在Windows上安装U">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Will&#39;s First Blog">
-<meta property="og:url" content="http://willhktube.github.io/Will-s-First-Blog.html">
+<meta property="og:title" content="Install Splunk on linux and collecting data">
+<meta property="og:url" content="http://willhktube.github.io/Install-Splunk-on-linux-and-collecting-data.html">
 <meta property="og:site_name" content="Will&#39;s Ideas">
-<meta property="og:description" content="想了想还是决定用中文吧 先做个简单的自我介绍，大家可以叫我Will，坐标香港。某天发现youtube上找不到一些感兴趣的内容的中文介绍，就想着可以尝试做这个方向的视频，顺便是可以记录一下自己的学习历程。 Cheers.">
+<meta property="og:description" content="今天主要是想分享一下怎么在linux服务器上部署standalone Splunk并且展示在linux和windows平台上收集日志的过程。同时会讲一下安装的时候我曾经碰见过的问题 以下是主要展示的内容  在linux系统上安装splunk Splunk监控linux本机上的日志内容 在Windows上安装UF并把日志转发到Splunk服务器上   Splunk文档链接: 在Windows上安装U">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-04-09T14:10:07.000Z">
-<meta property="article:modified_time" content="2020-04-10T11:16:31.225Z">
+<meta property="og:image" content="https://docs.splunk.com/images/c/ca/Departmental_deployment.png">
+<meta property="article:published_time" content="2020-04-18T14:53:47.000Z">
+<meta property="article:modified_time" content="2020-04-18T15:09:55.801Z">
 <meta property="article:author" content="Will Luo">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://docs.splunk.com/images/c/ca/Departmental_deployment.png">
   
     <link rel="alternate" href="/atom.xml" title="Will&#39;s Ideas" type="application/atom+xml">
   
@@ -66,10 +68,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Will-s-First-Blog" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Install-Splunk-on-linux-and-collecting-data" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/Will-s-First-Blog.html" class="article-date">
-  <time datetime="2020-04-09T14:10:07.000Z" itemprop="datePublished">2020-04-09</time>
+    <a href="/Install-Splunk-on-linux-and-collecting-data.html" class="article-date">
+  <time datetime="2020-04-18T14:53:47.000Z" itemprop="datePublished">2020-04-18</time>
 </a>
     
   </div>
@@ -80,7 +82,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Will&#39;s First Blog
+      Install Splunk on linux and collecting data
     </h1>
   
 
@@ -88,14 +90,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>想了想还是决定用中文吧</p>
-<p>先做个简单的自我介绍，大家可以叫我Will，坐标香港。某天发现youtube上找不到一些感兴趣的内容的中文介绍，就想着可以尝试做这个方向的视频，顺便是可以记录一下自己的学习历程。</p>
-<p>Cheers.</p>
+        <p>今天主要是想分享一下怎么在linux服务器上部署standalone Splunk并且展示在linux和windows平台上收集日志的过程。同时会讲一下安装的时候我曾经碰见过的问题</p>
+<p>以下是主要展示的内容</p>
+<ol>
+<li>在linux系统上安装splunk</li>
+<li>Splunk监控linux本机上的日志内容</li>
+<li>在Windows上安装UF并把日志转发到Splunk服务器上</li>
+</ol>
+<p><img src="https://docs.splunk.com/images/c/ca/Departmental_deployment.png" alt=""></p>
+<p>Splunk文档链接:</p>
+<p>在Windows上安装UF<br><a href="https://docs.splunk.com/Documentation/Forwarder/8.0.3/Forwarder/InstallaWindowsuniversalforwarderfromaninstaller" target="_blank" rel="noopener">https://docs.splunk.com/Documentation/Forwarder/8.0.3/Forwarder/InstallaWindowsuniversalforwarderfromaninstaller</a></p>
+<p>在Linux上安装UF<br><a href="https://docs.splunk.com/Documentation/Forwarder/8.0.3/Forwarder/Installanixuniversalforwarder" target="_blank" rel="noopener">https://docs.splunk.com/Documentation/Forwarder/8.0.3/Forwarder/Installanixuniversalforwarder</a></p>
+<p>UF配置：<br><a href="https://docs.splunk.com/Documentation/Forwarder/8.0.3/Forwarder/Configuretheuniversalforwarder" target="_blank" rel="noopener">https://docs.splunk.com/Documentation/Forwarder/8.0.3/Forwarder/Configuretheuniversalforwarder</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://willhktube.github.io/Will-s-First-Blog.html" data-id="ck95rd3nb0001fg9j6zplfcca" class="article-share-link">Share</a>
+      <a data-url="http://willhktube.github.io/Install-Splunk-on-linux-and-collecting-data.html" data-id="ck95rd3nf0003fg9j0embdfm8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -104,15 +115,11 @@
     
 <nav id="article-nav">
   
-    <a href="/Splunk-brief-Intro.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Splunk简单介绍 | Splunk brief Intro
-        
-      </div>
-    </a>
   
+    <a href="/Splunk-Architecture.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Splunk架构分享 | Splunk Architecture</div>
+    </a>
   
 </nav>
 
