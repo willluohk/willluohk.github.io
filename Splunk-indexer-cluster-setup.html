@@ -7,15 +7,15 @@
   
   <title>Splunk indexer cluster setup | Will&#39;s Ideas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这次分享会首先会进行一次Splunk indexer cluster的设置演示 Splunk indexer clustering 需要注意的几个点  系统方面  一个splunk instance 可以同时扮演一个或者几个role 推荐所有splunk instance运行在不同虚拟机且相同的OS上方便运维 所有splunk instance之间网络可达 各个splunk instance尽量用">
+  <meta name="description" content="Splunk indexer clustering 需要注意的几个点  系统方面  一个splunk instance 可以同时扮演一个或者几个role 推荐所有splunk instance运行在不同虚拟机且相同的OS上方便运维 所有splunk instance之间网络可达 各个splunk instance尽量用同一个version， SH 跟 indexer masterk可以用same">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Splunk indexer cluster setup">
 <meta property="og:url" content="http://willhktube.github.io/Splunk-indexer-cluster-setup.html">
 <meta property="og:site_name" content="Will&#39;s Ideas">
-<meta property="og:description" content="这次分享会首先会进行一次Splunk indexer cluster的设置演示 Splunk indexer clustering 需要注意的几个点  系统方面  一个splunk instance 可以同时扮演一个或者几个role 推荐所有splunk instance运行在不同虚拟机且相同的OS上方便运维 所有splunk instance之间网络可达 各个splunk instance尽量用">
+<meta property="og:description" content="Splunk indexer clustering 需要注意的几个点  系统方面  一个splunk instance 可以同时扮演一个或者几个role 推荐所有splunk instance运行在不同虚拟机且相同的OS上方便运维 所有splunk instance之间网络可达 各个splunk instance尽量用同一个version， SH 跟 indexer masterk可以用same">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-16T12:50:45.000Z">
-<meta property="article:modified_time" content="2020-06-16T13:14:42.802Z">
+<meta property="article:modified_time" content="2020-06-20T04:03:56.846Z">
 <meta property="article:author" content="Will Luo">
 <meta property="article:tag" content="Splunk">
 <meta name="twitter:card" content="summary">
@@ -89,8 +89,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这次分享会首先会进行一次Splunk indexer cluster的设置演示</p>
-<p>Splunk indexer clustering 需要注意的几个点</p>
+        <p>Splunk indexer clustering 需要注意的几个点</p>
 <ol>
 <li><p>系统方面</p>
 <ol>
@@ -112,6 +111,43 @@
 <li>Replication Factor(RF)就是这个cluster存下来的日志副本的数量，设置RF的时候要注意RF数不大于Peer数量，且官方不推荐配置完后后期进行修改</li>
 <li>Search Factor (SF) 用来设置可以用于搜索的日志副本数量，例如如果你的SF是1，某个peer down了，刚好可以用于搜索的日志在那个peer上，即使在别的peer上有需要被搜索的日志副本，也要等rebuid一个<em>可搜索</em>的日志副本，然后SH才可以搜索到目标日志</li>
 </ol>
+</li>
+</ol>
+<p>安装步骤</p>
+<ol>
+<li><p>准备三台相同版本的linux服务器，分别命名为indexer master, indexer1 和 indexer2，设置静态IP，sync时区</p>
+</li>
+<li><p>创建新用户splunk，授权新用户/opt管理员权限，加入sudo组<br> Useradd splunk<br> Passwd splunk<br> [enter password]<br> Chown root:splunk /opt<br> Chmod 570 /opt<br> Usermod -aG wheel splunk<br> Su – splunk</p>
+</li>
+</ol>
+<ol start="3">
+<li><p>放防火墙端口（for大部分splunk需要使用的端口，具体端口用于什么服务参照splunk常用端口图示）<br> sudo firewall-cmd –permanent –zone=public –add-port=8001/tcp<br> sudo firewall-cmd –permanent –zone=public –add-port=8000/tcp<br> sudo firewall-cmd –permanent –zone=public –add-port=8089/tcp<br> sudo firewall-cmd –permanent –zone=public –add-port=8191/tcp<br> sudo firewall-cmd –permanent –zone=public –add-port=8080/tcp<br> sudo firewall-cmd –permanent –zone=public –add-port=9997/tcp<br> sudo firewall-cmd –reload</p>
+</li>
+<li><p>下载splunk安装包到一部linux服务器并scp到另外两台服务器，用splunk用户进行安装<br> tar xvzf [splunk_package_name.tgz] -C /opt</p>
+</li>
+<li><p>配置开机自启动<br>sudo /opt/splunk/bin/splunk enable boot-start -user splunk</p>
+</li>
+<li><p>配置init.d权限<br> Cd /etc/init.d<br> Sudo chmod 755 splunk</p>
+</li>
+<li><p>开启splunk服务<br> Sudo service splunk start</p>
+</li>
+<li><p>通过三部splunk的IP：8000端口进入控制台</p>
+</li>
+<li><p>在indexer master里进入Settings &gt; Index Clustering ， 点击 Enable Indexer clustering</p>
+</li>
+<li><p>选择Master Node，输入 RF,SF,Security Key,Cluster Label, 点击enable master node</p>
+</li>
+<li><p>重启Splunk</p>
+</li>
+<li><p>在indexer1与indexer2里进入Settings &gt; Index Clustering，点击 Enable Indexer clustering</p>
+</li>
+<li><p>选择Peer Node</p>
+</li>
+<li><p>输入indexer master URI,这里注意要写HTTPS与最后要加上：8089端口</p>
+</li>
+<li><p>输入peer replication port, security key,点击enable peer node</p>
+</li>
+<li><p>重启splunk</p>
 </li>
 </ol>
 <p>Indexer cluster deployment overview</p>
