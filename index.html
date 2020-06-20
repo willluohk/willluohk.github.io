@@ -64,6 +64,71 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Splunk-indexer-cluster-setup" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Splunk-indexer-cluster-setup.html" class="article-date">
+  <time datetime="2020-06-16T12:50:45.000Z" itemprop="datePublished">2020-06-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Splunk-indexer-cluster-setup.html">Splunk indexer cluster setup</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这次分享会首先会进行一次Splunk indexer cluster的设置演示</p>
+<p>Splunk indexer clustering 需要注意的几个点</p>
+<ol>
+<li><p>系统方面</p>
+<ol>
+<li>一个splunk instance 可以同时扮演一个或者几个role</li>
+<li>推荐所有splunk instance运行在不同虚拟机且相同的OS上方便运维</li>
+<li>所有splunk instance之间网络可达</li>
+<li>各个splunk instance尽量用同一个version， SH 跟 indexer masterk可以用same or later version, peer用一样的version</li>
+</ol>
+</li>
+<li><p>授权方面</p>
+<ol>
+<li>只有进入splunk平台被index的日志才会计算授权，peer之间复制日志不计算授权</li>
+<li>推荐所有splunk instance用master slave的形式用统一授权</li>
+<li>测试环境用可以直接用试用授权搭建indexer cluster， 用Splunk Dev License不能搭建indexer cluster平台</li>
+</ol>
+</li>
+<li><p>Search Factor , Replication Factor</p>
+<ol>
+<li>Replication Factor(RF)就是这个cluster存下来的日志副本的数量，设置RF的时候要注意RF数不大于Peer数量，且官方不推荐配置完后后期进行修改</li>
+<li>Search Factor (SF) 用来设置可以用于搜索的日志副本数量，例如如果你的SF是1，某个peer down了，刚好可以用于搜索的日志在那个peer上，即使在别的peer上有需要被搜索的日志副本，也要等rebuid一个<em>可搜索</em>的日志副本，然后SH才可以搜索到目标日志</li>
+</ol>
+</li>
+</ol>
+<p>Indexer cluster deployment overview</p>
+<p><a href="https://docs.splunk.com/Documentation/Splunk/8.0.4/Indexer/Clusterdeploymentoverview" target="_blank" rel="noopener">https://docs.splunk.com/Documentation/Splunk/8.0.4/Indexer/Clusterdeploymentoverview</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://willhktube.github.io/Splunk-indexer-cluster-setup.html" data-id="ckbn32drc0002e89j863z833t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Splunk/" rel="tag">Splunk</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Install-Splunk-on-linux-and-collecting-data" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/Install-Splunk-on-linux-and-collecting-data.html" class="article-date">
@@ -113,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://willhktube.github.io/Install-Splunk-on-linux-and-collecting-data.html" data-id="ck96n1urp0004v49jbq2g03bh" class="article-share-link">Share</a>
+      <a data-url="http://willhktube.github.io/Install-Splunk-on-linux-and-collecting-data.html" data-id="ckbn32ds50008e89j9ljohon6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Splunk/" rel="tag">Splunk</a></li></ul>
@@ -240,7 +305,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://willhktube.github.io/Splunk-Architecture.html" data-id="ck96n1urg0001v49j113l4q3b" class="article-share-link">Share</a>
+      <a data-url="http://willhktube.github.io/Splunk-Architecture.html" data-id="ckbn32ds30007e89j40g6fvq2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Splunk/" rel="tag">Splunk</a></li></ul>
@@ -346,7 +411,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://willhktube.github.io/Splunk-brief-Intro.html" data-id="ck96n1urj0002v49j8v9k8qbf" class="article-share-link">Share</a>
+      <a data-url="http://willhktube.github.io/Splunk-brief-Intro.html" data-id="ckbn32dr80001e89jfixg0qgc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Splunk/" rel="tag">Splunk</a></li></ul>
@@ -387,7 +452,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://willhktube.github.io/Will-s-First-Blog.html" data-id="ck96n1ur70000v49j8e5c3v6g" class="article-share-link">Share</a>
+      <a data-url="http://willhktube.github.io/Will-s-First-Blog.html" data-id="ckbn32dqv0000e89je2d1fq2q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -429,7 +494,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li></ul>
     </div>
   </div>
 
@@ -440,6 +505,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/Splunk-indexer-cluster-setup.html">Splunk indexer cluster setup</a>
+          </li>
         
           <li>
             <a href="/Install-Splunk-on-linux-and-collecting-data.html">Install Splunk on linux and collecting data</a>
