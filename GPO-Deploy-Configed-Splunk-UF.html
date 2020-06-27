@@ -5,17 +5,17 @@
   
 
   
-  <title>Will&#39;s First Blog | Will&#39;s Ideas</title>
+  <title>GPO Deploy Configed Splunk UF | Will&#39;s Ideas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="想了想还是决定用中文吧 先做个简单的自我介绍，大家可以叫我Will，坐标香港。某天发现youtube上找不到一些感兴趣的内容的中文介绍，就想着可以尝试做这个方向的视频，顺便是可以记录一下自己的学习历程。 Cheers.">
+  <meta name="description" content="本文方法源自 https:&#x2F;&#x2F;blog.edie.io&#x2F;2020&#x2F;03&#x2F;28&#x2F;deploying-splunk-universal-forwarders-via-gpo&#x2F;  一开始是自己在想如何实现这个需求，没想到找到了一个英文版本的经验分享，尝试后发现真的可用，翻译为中文版本分享给大家： 在非小规模部署Splunk UF的情况下，要infra admin一部机一部机地去安装Splunk UF并进">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Will&#39;s First Blog">
-<meta property="og:url" content="http://willhktube.github.io/Will-s-First-Blog.html">
+<meta property="og:title" content="GPO Deploy Configed Splunk UF">
+<meta property="og:url" content="http://willhktube.github.io/GPO-Deploy-Configed-Splunk-UF.html">
 <meta property="og:site_name" content="Will&#39;s Ideas">
-<meta property="og:description" content="想了想还是决定用中文吧 先做个简单的自我介绍，大家可以叫我Will，坐标香港。某天发现youtube上找不到一些感兴趣的内容的中文介绍，就想着可以尝试做这个方向的视频，顺便是可以记录一下自己的学习历程。 Cheers.">
+<meta property="og:description" content="本文方法源自 https:&#x2F;&#x2F;blog.edie.io&#x2F;2020&#x2F;03&#x2F;28&#x2F;deploying-splunk-universal-forwarders-via-gpo&#x2F;  一开始是自己在想如何实现这个需求，没想到找到了一个英文版本的经验分享，尝试后发现真的可用，翻译为中文版本分享给大家： 在非小规模部署Splunk UF的情况下，要infra admin一部机一部机地去安装Splunk UF并进">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-04-09T14:10:07.000Z">
-<meta property="article:modified_time" content="2020-04-10T11:16:31.225Z">
+<meta property="article:published_time" content="2020-06-27T11:35:16.000Z">
+<meta property="article:modified_time" content="2020-06-27T11:44:33.401Z">
 <meta property="article:author" content="Will Luo">
 <meta name="twitter:card" content="summary">
   
@@ -66,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Will-s-First-Blog" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-GPO-Deploy-Configed-Splunk-UF" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/Will-s-First-Blog.html" class="article-date">
-  <time datetime="2020-04-09T14:10:07.000Z" itemprop="datePublished">2020-04-09</time>
+    <a href="/GPO-Deploy-Configed-Splunk-UF.html" class="article-date">
+  <time datetime="2020-06-27T11:35:16.000Z" itemprop="datePublished">2020-06-27</time>
 </a>
     
   </div>
@@ -80,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Will&#39;s First Blog
+      GPO Deploy Configed Splunk UF
     </h1>
   
 
@@ -88,14 +88,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>想了想还是决定用中文吧</p>
-<p>先做个简单的自我介绍，大家可以叫我Will，坐标香港。某天发现youtube上找不到一些感兴趣的内容的中文介绍，就想着可以尝试做这个方向的视频，顺便是可以记录一下自己的学习历程。</p>
-<p>Cheers.</p>
+        <p>本文方法源自 <a href="https://blog.edie.io/2020/03/28/deploying-splunk-universal-forwarders-via-gpo/" target="_blank" rel="noopener">https://blog.edie.io/2020/03/28/deploying-splunk-universal-forwarders-via-gpo/</a> </p>
+<p>一开始是自己在想如何实现这个需求，没想到找到了一个英文版本的经验分享，尝试后发现真的可用，翻译为中文版本分享给大家：</p>
+<p>在非小规模部署Splunk UF的情况下，要infra admin一部机一部机地去安装Splunk UF并进行人手配置是不现实的，一般情况下如果是window环境，会使用SCCM或者用自动化部署的方案进行部署。<br>这次准备跟大家分享一个用GPO进行部署的方式，以及分享一下自己碰到的坑。</p>
+<p>以下是简要部署步骤：<br>    1. 下载Splunk UF 的msi安装档<br>    2. 下载Orca软件<br>    3. 制作MST配置文件<br>    4. 部署GPO</p>
+<p>首先在windows10环境中下载Orca， 要下载Orca需要先下载安装Microsoft Windows Software Development Kit (SDK) （<a href="https://developer.microsoft.com/zh-tw/windows/downloads/windows-10-sdk/）" target="_blank" rel="noopener">https://developer.microsoft.com/zh-tw/windows/downloads/windows-10-sdk/）</a><br>modify这个软件，勾选MSI tools，然后安装下面这个软件<br>C:\Program Files (x86)\Windows Kits\10\bin\x86\Orca-x86_en-us.msi</p>
+<p>orca安装完成后，打开软件， 打开splunk uf msi文件，选择Transform &gt; New Transform， 选择Property，将AGREETOLICENSE的值改为Yes.<br>然后右键add row， 添加下列key-value field：<br>SPLUNKUSERNAME=splunk_admin<br>SPLUNKPASSWORD=stRongPassword<br>DEPLOYMENT_SERVER=Splunk_deployment_server_IP:8089</p>
+<p>!!这里的value一定要注意符合软件要求的复杂度，如果用简单的1234作为密码，在后期不会报错，但是安装会不成功。</p>
+<p>然后选择Transform &gt; Generate Transform保存文件为mst文件.</p>
+<p>把splunk uf msi安装文件跟这个mst文件一起放在一个网络共享文件夹中，确认可以被目标计算机或者用户读取。</p>
+<p>然后配置GPO，在选择安装文件之外需要在software installation里选择advance deployment method, modification, 选择网络共享文件夹中的mst文件.</p>
+<p>最后在domain的机子上进行gpupdate /force就可以了</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://willhktube.github.io/Will-s-First-Blog.html" data-id="ckbn32dqv0000e89je2d1fq2q" class="article-share-link">Share</a>
+      <a data-url="http://willhktube.github.io/GPO-Deploy-Configed-Splunk-UF.html" data-id="ckbxkva7j0000949jb4jv46rh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -104,15 +112,11 @@
     
 <nav id="article-nav">
   
-    <a href="/Splunk-brief-Intro.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Splunk简单介绍 | Splunk brief Intro
-        
-      </div>
-    </a>
   
+    <a href="/Splunk-indexer-cluster-setup.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Splunk indexer cluster setup</div>
+    </a>
   
 </nav>
 
